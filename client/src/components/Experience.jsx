@@ -1,27 +1,23 @@
-import {
-  ContactShadows,
-  Environment,
-  OrbitControls,
-  useCursor,
-} from '@react-three/drei';
+import { ContactShadows, OrbitControls, useCursor } from '@react-three/drei';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import * as THREE from 'three';
 import { AnimatedWoman } from './AnimatedWoman';
 import { charactersAtom, socket } from './SocketManager';
+import Item from './Item';
 export const Experience = () => {
   const [characters] = useAtom(charactersAtom);
   const [onFloor, setOnFloor] = useState(false);
   useCursor(onFloor);
 
-  console.log('char', characters);
-
   return (
     <>
-      {/* <Environment preset="sunset" /> */}
+      <pointLight position={[10, 10, 10]} />
       <ambientLight intensity={0.3} />
       <ContactShadows blur={2} />
       <OrbitControls />
+      <Item name="Tree" />
+
       <mesh
         rotation-x={-Math.PI / 2}
         position-y={-0.001}
@@ -32,6 +28,7 @@ export const Experience = () => {
         <planeGeometry args={[10, 10]} />
         <meshStandardMaterial color="#f0f0f0" />
       </mesh>
+
       {characters.map((character) => (
         <AnimatedWoman
           key={character.id}
